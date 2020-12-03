@@ -1,7 +1,6 @@
+var profilePictureSlot = document.getElementById("profilePicture");
 var fullNameSlot = document.getElementById("fullName");
-var streetSlot = document.getElementById("street");
-var stateSlot = document.getElementById("state");
-var countrySlot = document.getElementById("country");
+var addressSlot = document.getElementById("address");
 var telephoneSlot = document.getElementById("telephone");
 var emailSlot = document.getElementById("email");
 var dobSlot = document.getElementById("dob");
@@ -30,10 +29,9 @@ function AssignResumeData(resumes)
 {
     resumes.forEach(function(resume) {
     
+        var profilePicture = document.createElement("span");
         var fullName = document.createElement("span");
-        var street = document.createElement("span");
-        var state = document.createElement("span");
-        var country = document.createElement("span");
+        var address = document.createElement("span");
         var telephone = document.createElement("span");
         var email = document.createElement("span");
         var dob = document.createElement("span");
@@ -46,69 +44,92 @@ function AssignResumeData(resumes)
         var experience = document.createElement("span");
         var extraExp = document.createElement("span");
         var awards = document.createElement("span");
-    
-        fullName.innerHTML = resume.fullName;
-        street.innerHTML = resume.street;
-        state.innerHTML = resume.state;
-        country.innerHTML = resume.country;
-        telephone.innerHTML = resume.telephone;
-        email.innerHTML = resume.email;
-        dob.innerHTML = resume.dob;
-        nationalities.innerHTML = "";
-        languages.innerHTML = "";
-        itSkills.innerHTML = "";
-        otherSkills.innerHTML = resume.otherSkills;
-        interests.innerHTML = "";
-        education.innerHTML = "";
-        experience.innerHTML = "";
-        extraExp.innerHTML = "";
-        awards.innerHTML = "";
+
+        var profilePictureHold = document.createElement("img");
+        profilePictureHold.setAttribute("src",resume.profilePicture);
+        profilePictureHold.setAttribute("alt","Profile picture");
+        profilePicture.appendChild(profilePictureHold);
+
+        var fullNameHold = document.createElement("h2");
+        fullNameHold.innerHTML = resume.fullName;
+        fullName.appendChild(fullNameHold);
+
+        var addressHold = document.createElement("span");
+        addressHold.setAttribute("class","leftDetails");
+        addressHold.innerHTML = resume.address[0] + ", "+resume.address[1]+"<br>"+resume.address[2];
+        address.appendChild(addressHold);
+
+        var telephoneHold = document.createElement("span");
+        telephoneHold.setAttribute("class","leftDetails");
+        telephoneHold.innerHTML = resume.telephone;
+        telephone.appendChild(telephoneHold);
+
+        var emailHold = document.createElement("span");
+        emailHold.setAttribute("class","leftDetails");
+        emailHold.innerHTML = resume.email;
+        email.appendChild(emailHold);
+
+        var dobHold = document.createElement("span");
+        dobHold.setAttribute("class","leftDetails");
+        dobHold.innerHTML = resume.dob;
+        dob.appendChild(dobHold);
+
+        var otherSkillsHold = document.createElement("span");
+        otherSkillsHold.setAttribute("class","leftDetails");
+        otherSkillsHold.innerHTML = resume.otherSkills;
+        otherSkills.appendChild(otherSkillsHold);
+
+        var nationalitiesHold = document.createElement("span");
+        nationalitiesHold.setAttribute("class","leftDetails");
+        nationalitiesHold.innerHTML = resume.nationalities[0] + "<br>"+resume.nationalities[1];
+        nationalities.appendChild(nationalitiesHold);
         
-        resume.nationalities.forEach(function(n){
-            nationalities.innerHTML += n;
-            if(n == resume.nationalities[resume.nationalities.length-1])
-            {
-    
-            }
-            else
-            {
-                nationalities.innerHTML += "<br>";
-            }
-        });
+        var languagesHold = document.createElement("span");
+        languagesHold.setAttribute("class", "leftDetails");
         resume.languages.forEach(function(n){
-            languages.innerHTML += n[0]+": "+n[1];
+            languagesHold.innerHTML += n[0]+": "+n[1];
             if(n == resume.languages[resume.languages.length-1])
             {
     
             }
             else
             {
-                languages.innerHTML += "<br>";
+                languagesHold.innerHTML += "<br>";
             }
         });
+        languages.appendChild(languagesHold);
+
+        var itSkillsHold = document.createElement("span");
+        itSkillsHold.setAttribute("class","leftDetails");
         resume.itSkills.forEach(function(n){
-            itSkills.innerHTML += n;
+            itSkillsHold.innerHTML += n;
             if(n == resume.itSkills[resume.itSkills.length-1])
             {
     
             }
             else
             {
-                itSkills.innerHTML += "<br>";
+                itSkillsHold.innerHTML += "<br>";
             }
         });
+        itSkills.appendChild(itSkillsHold);
+
+        var interestsHold = document.createElement("span");
+        interestsHold.setAttribute("class","leftDetails");
         resume.interests.forEach(function(n)
         {
-            interests.innerHTML += n;
+            interestsHold.innerHTML += n;
             if(n == resume.interests[resume.interests.length-1])
             {
     
             }
             else
             {
-                interests.innerHTML += "<br>";
+                interestsHold.innerHTML += "<br>";
             }
         });
+        interests.appendChild(interestsHold);
+
         resume.education.forEach(function(n)
         {
             var holder = document.createElement("tr");
@@ -174,10 +195,9 @@ function AssignResumeData(resumes)
             awards.appendChild(holder);
         });
     
+        profilePictureSlot.appendChild(profilePicture);
         fullNameSlot.appendChild(fullName);
-        streetSlot.appendChild(street);
-        stateSlot.appendChild(state);
-        countrySlot.appendChild(country);
+        addressSlot.appendChild(address);
         telephoneSlot.appendChild(telephone);
         emailSlot.appendChild(email);
         dobSlot.appendChild(dob);
@@ -192,7 +212,3 @@ function AssignResumeData(resumes)
         awardsSlot.appendChild(awards);
     });
 }
-
-GetResumes(function(n){
-    AssignResumeData(n);
-})
